@@ -1,0 +1,51 @@
+%\documentclass[final,leqno,onefignum,onetabnum]{siamltexmm}
+\documentclass[]{article}
+\usepackage{amsmath}
+\usepackage{paralist}
+
+\usepackage{graphicx} % Allows including images
+
+\title{An application of Spectral Clustering on Named Entity Recognition}
+
+\author{Ali Josue Limon; Michele Cer\'u \\ 
+\texttt{ajl649@nyu.edu }; \texttt{mc3784@nyu.edu}
+}
+\begin{document}
+\maketitle
+\newcommand{\slugmaster}{%
+\slugger{siads}{xxxx}{xx}{x}{x---x}}%slugger should be set to juq, siads, sifin, or siims
+
+
+%\newcommand{\slugmaster}{
+%\slugger{siads}{xxxx}{xx}{x}{x---x}}%slugger should be set to juq, siads, sifin, or siims
+
+\section{Abstract}
+
+Named Entity Recognition (NER) is one of the important parts of NLP. It aims to find and classify expressions of special meaning in texts written in natural language.  These expressions can belong to different predefined classes such as Person, Organization and Location. \\
+
+Prior work on NER come in three kinds: supervised learning algorithms, semi-supervised learning algorithms, and unsupervised learning algorithm. Compared with supervised and semi-supervised methods, unsupervised approach for entity recognition can overcome the difficulties on requirement of a large amount of labeled data. \\
+
+In this project we aim to investigate the possibility of using spectral clustering \cite{spectral}  to a NER task in Spanish. Becuase of the lack of spanish labeled corpora, an unsupervised techique could have important applications. The dataset we are going to use contains some words labeled with a tag that represents whether the word is a place, a person or an organization \cite{dataset}. The aim of the project is to use the vector that represent the context of each word and apply to them the spectral clustering technique \cite{spectral}, to see weather the words cluster according to their labels or not. A similar approach can be found in \cite{popescu}, where spectral clustering is used for word sentence disambiguation WSD. To represent the context of a target word, we will use the vector formed by the continuous bag of words of the context \cite{vecSp}, that is the average of the word2vec \cite{word2vec} representation of all the words in the sentence containing a target word. In this way, the contribution of our project would be the implementation of the word embedding vector representation to compute spectral clustering. \\
+%could be a good choice to describe the context of the target word. \\
+  % with a performance greater than or equal to the baseline.
+  
+  The experimentation of this work will be carried on a corpora that consist of sentences extracted from news articles. The corpora corresponds to the \emph{CoNLL 2002} Shared Task Spanish data, the original source being the \emph{EFE Spanish Newswire Agency}.  The data consists of two columns separated by a single space. The first item on each line is a word and the second the named entity tag. In this dataset, there are four types of entities: person names (PER), organizations (ORG), locations (LOC) and miscellaneous names (MISC) and other (O). This dataset contains 11,752 sentences, 369,171 words and 26,706 Name Entities.  
+  
+  
+\pagestyle{myheadings}
+\thispagestyle{plain}
+
+
+\begin{thebibliography}{1}
+  \bibitem{dataset} http://www.cnts.ua.ac.be/conll2002/ner/
+  \bibitem{spectral}http://www.cims.nyu.edu/$\sim$bandeira/TenLecturesFortyTwoProblems.pdf
+  \bibitem{popescu} Popescu, M., \& Hristea, F. (2011). State of the art versus classical clustering for unsupervised word sense disambiguation. Artificial Intelligence Review, 35(3), 241?264. http://dx.doi.org/10.1007/s10462-010-9193-7.  
+  \bibitem{vecSp} http://crscardellino.me/SBWCE/
+   \bibitem{word2vec} Mikolov, T., Chen, K., Corrado, G., \& Dean, J. (2013). Efficient Estimation of Word Representations in Vector Space. arXiv preprint arXiv:1301.3781. 
+   
+\end{thebibliography} 
+
+
+\end{document}
+
+
