@@ -19,18 +19,49 @@
 %\newcommand{\slugmaster}{
 %\slugger{siads}{xxxx}{xx}{x}{x---x}}%slugger should be set to juq, siads, sifin, or siims
 
-\section{Abstract}
+\begin{abstract}
+This study explores the peformance of spectral clustering in a Spanish NER task. Our approach comprises two main steps. Firstly, we represent each Entity in two different ways: 1) by the embedding vector formed from the entity and 2) by the embedding vector formed from the context and the entity.  Then, we use spectral clustering over the words embeddings  to analyze weather the words cluster according to their labels or not.  In order to train the word embedding, we used Word2Vec algorithm over a Spanish Billion Words Corpus with the skip-gram and CBOW models.  Our results suggest that 
+
+
+\end{abstract}
+
+\section{Introduction}
+
 
 Named Entity Recognition (NER) is one of the important parts of NLP. It aims to find and classify expressions of special meaning in texts written in natural language.  These expressions can belong to different predefined classes such as Person, Organization and Location. \\
 
-Prior work on NER come in three kinds: supervised learning algorithms, semi-supervised learning algorithms, and unsupervised learning algorithm. Compared with supervised and semi-supervised methods, unsupervised approach for entity recognition can overcome the difficulties on requirement of a large amount of labeled data. \\
+Prior work on NER come in three kinds: supervised learning algorithms, semi-supervised learning algorithms, and unsupervised learning algorithm. Compared with supervised and semi-supervised methods, unsupervised approach for entity recognition can overcome the difficulties on requirement of a large amount of labeled data, which is a common problem in some languages such as Spanish. \\
 
-In this project we aim to investigate the possibility of using spectral clustering \cite{spectral}  to a NER task in Spanish. Becuase of the lack of spanish labeled corpora, an unsupervised techique could have important applications. The dataset we are going to use contains some words labeled with a tag that represents whether the word is a place, a person or an organization \cite{dataset}. The aim of the project is to use the vector that represent the context of each word and apply to them the spectral clustering technique \cite{spectral}, to see weather the words cluster according to their labels or not. A similar approach can be found in \cite{popescu}, where spectral clustering is used for word sentence disambiguation WSD. To represent the context of a target word, we will use the vector formed by the continuous bag of words of the context \cite{vecSp}, that is the average of the word2vec \cite{word2vec} representation of all the words in the sentence containing a target word. In this way, the contribution of our project would be the implementation of the word embedding vector representation to compute spectral clustering. \\
-%could be a good choice to describe the context of the target word. \\
-  % with a performance greater than or equal to the baseline.
-  
-  The experimentation of this work will be carried on a corpora that consist of sentences extracted from news articles. The corpora corresponds to the \emph{CoNLL 2002} Shared Task Spanish data, the original source being the \emph{EFE Spanish Newswire Agency}.  The data consists of two columns separated by a single space. The first item on each line is a word and the second the named entity tag. In this dataset, there are four types of entities: person names (PER), organizations (ORG), locations (LOC) and miscellaneous names (MISC) and other (O). This dataset contains 11,752 sentences, 369,171 words and 26,706 Name Entities.  
-  
+In this paper we investigate whether spectral clustering techniques can be successfully applied to NER in Spanish. In order to do so, we transform the original input, defined by the the word2Vector embeddings of entities and context, into a set of orthogonal eigenvectors. Then, We work in the space defined by the first few eigenvectors, using standard clustering techniques in the reduced space. \\
+
+The paper is organized as follows. In Section 2, we provide a explanation of the data used to accomplish the study. Section 3 describes the architecture to create the word embeddings. Section 4 presents our framework for NER and Section 5 shows our experimental setting and results. Finally, Section 6 presents our final remarks.
+
+\section{Data and Evaluation}
+  The experimentation of this work will be carried on a corpora that consist of sentences extracted from news articles. The corpora corresponds to the \emph{CoNLL 2002} Shared Task Spanish data, the original source being the \emph{EFE Spanish Newswire Agency}.  The data consists of two columns separated by a single space. The first item on each line is a word and the second the named entity tag. In this dataset, there are four types of entities: person names (PER), organizations (ORG), locations (LOC) and miscellaneous names (MISC) and other (O). This dataset contains 11,752 sentences, 369,171 words and 26,706 Name Entities.  \\
+ 
+  In order to create the word embedding, we added to the \emph{CoNLL 2002} dataset an unannotated corpus of the Spanish Billion Words Corpus [reference] with a total of 1420665810 raw words,  46925295 sentences and 3817833 unique tokens. Both Corpuses are preprocessed by replacing all non-alphanumeric characters with whitespaces, all numbers with the token ''DIGITO'' and all the multiple whitespaces with only one whitespace. \\
+
+As evaluation method for the spectral cluster, we use Rand measure, which is a measure of the similarity between two data clusterings. Mas 
+
+
+
+
+\section{Word2Vector}
+
+Word2vec is a two-layer neural net that processes text. Its input is a text corpus and its output is a set of vectors: feature vectors for words in that corpus. While Word2vec is not a deep neural network, it turns text into a numerical form that deep nets can understand. \\ 
+
+The purpose and usefulness of Word2vec is to group the vectors of similar words together in vectorspace. That is, it detects similarities mathematically. Word2vec creates vectors that are distributed numerical representations of word features, features such as the context of individual words. It does so without human intervention. \\
+
+It does so in one of two ways, either using context to predict a target word (a method known as continuous bag of words, or CBOW), or using a word to predict a target context, which is called skip-gram. For both approaches a neural network is trained with a single hidden layer to perform a certain task depending of the approach. The goal is actually just to learn the weights of the hidden layer instead of use the neural network for the task we trained. These weights are actually the ?word vectors? that we?re trying to learn.
+
+\section{Methodology}
+
+To represent the context of a target word, we will use the vector formed by the continuous bag of words of the context \cite{vecSp}, that is the average of the word2vec \cite{word2vec} representation of all the words in the sentence containing a target word. In this way, the contribution of our project would be the implementation of the word embedding vector representation to compute spectral clustering. \\
+
+\section{Experiments and Discussion}
+
+
+\section{Conclusions}
   
 \pagestyle{myheadings}
 \thispagestyle{plain}
