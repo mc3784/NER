@@ -30,9 +30,9 @@
 	
 	Named Entity Recognition (NER) is one of the important parts of NLP. It aims to find and classify expressions of special meaning in texts written in natural language.  These expressions can belong to different predefined classes such as Person, Organization and Location. 
 	
-	The main algorithms that are currently used for NER in English involves Neural Networks that are trained in a supervised way using large corpuses of labeled data. However, in most languages and domains, there is only a very small amount of supervised training data available, and consequently these supervised algorithms are hard to train. Specifically for Spanish, NER is a challenging problem because of the lack of resources and labeled data. 
+	The main algorithms that are currently used for NER in English involve Neural Networks that are trained in a supervised way using large corpuses of labeled data. However, in most languages and domains, there is only a very small amount of supervised training data available, and consequently these supervised algorithms are hard to train. Specifically for Spanish, NER is a challenging problem because of the lack of resources and labeled data. 
 	
-	In this paper we investigate whether spectral clustering techniques can be successfully applied to NER in Spanish. In order to do so, we transform the original input, defined by the the word2Vector embeddings of entities and context, into a set of orthogonal eigenvectors. Then, We work in the space defined by the first few eigenvectors, using standard clustering techniques in the reduced space.
+	In this paper we investigate whether spectral clustering techniques can be successfully applied to NER in Spanish. In order to do so, we transform the original input, defined by the word2Vector embeddings of entities and context, into a set of orthogonal eigenvectors. Then, We work in the space defined by the first few eigenvectors, using standard clustering techniques in the reduced space.
 	
 	The paper is organized as follows. In Section 2, we provide a explanation of the data used to accomplish the study. Section 3 describes the architecture to create the word embeddings. Section 4 presents our framework for NER and Section 5 explains the metric used to evaluate results. In Section 6 the experiments and results are discussed.  Finally, Section 7 presents the conclusions.
 	
@@ -95,7 +95,7 @@
 	
 	
 	\section{Evaluation}
-	To compare the different models we ran, we used the Adjusted Rand index \cite{rand},  that evaluate the accuracy of the predicted labels of the clustering given the ground truth of the label. 
+	To compare the different models we ran, we used the Adjusted Rand index \cite{rand},  that evaluates the accuracy of the predicted labels of the clustering given the ground truth of the label. 
 	This index looks at each pair of sample, and evaluate the consistency of the prediction given the true label. Calling $C$ the ground truth clustering and $C'$ the predicted one, there are four possible set of pairs:
 	$$
 	\begin{array}{ll}
@@ -133,12 +133,12 @@
 \end{figure}
 
 
-After Training the model with different combination of parameters (figure \ref{fig:params}), we found that the best model is the one that uses a CBOW embedding with dimension size $d_E=100$, average over $n_w=3$ entity context words, and the cosine similarity as the kernel for spectral clustering. The spectral clustering has also a comparable Rand index value for small values of $\gamma$. In the plot we reported the results for this two model compared with the Rand index obtained applying k-means clustering to the embedding vectors. 
+After Training the model with different combination of parameters (Figure \ref{fig:params}), we found that the best model is the one that uses a CBOW embedding with dimension size $d_E=100$, average over $n_w=3$ entity context words, and the cosine similarity as the kernel for spectral clustering. The spectral clustering has also a comparable Rand index value for small values of $\gamma$. In Figure \ref{fig:best} we report the results for this two model compared with the Rand index obtained applying k-means clustering to the embedding vectors. 
 
-	\begin{figure}\label{fig:best}
+	\begin{figure}
 	\centering
 	\includegraphics[width=0.8\textwidth]{Figures_Mik/results.png} 
-	\caption{The blue line show the rand index for the  exponential kernel model trained for different value of $\gamma$. The red line is the best model (cosine similarity) and the green line is the kmeans clustering, reported here as a bench mark } 
+	\caption{\label{fig:best} The blue line show the rand index for the  exponential kernel model trained for different value of $\gamma$. The red line is the best model (cosine similarity) and the green line is the kmeans clustering, report here as a bench mark } 
 \end{figure}
 The following table contains the correspondence between the numeric label used for the clusters and its name entity, if also contain the total number of samples for each clusters: 
 \begin{center}
@@ -156,40 +156,39 @@ The following table contains the correspondence between the numeric label used f
 		\hline
 	\end{tabular}
 \end{center}
-The figures with the confusion matrices describe how the three model described here (Kmeans, Spectral with exponential kernel and Spectral with Cosine similarity) compere with an ideal perfect clustering. We notice that the worst cluster in every models is the number 3 that correspond with the named entity "Miscellaneous" that is an ambiguous label and therefore it is reasonable that it is not actually possible to obtain a cluster for it.
+The figures with the confusion matrices describe how the three models described here (Kmeans (in Figure \ref{fig:confusionK}), Spectral with exponential kernel (in Figure \ref{fig:confusionE}), and Spectral with Cosine similarity ( in Figure \ref{fig:confusionC})) compere with an ideal perfect clustering (in Figure \ref{fig:confusionT}). We notice that the worst cluster in every models is the number 3 that correspond with the named entity "Miscellaneous" that is an ambiguous label and therefore it is reasonable that it is not actually possible to obtain a cluster for it.
 	
 	
 	\begin{figure}
-		\label{confusion} 
 		\begin{minipage}[b]{0.5\linewidth}
 			\centering
 			\includegraphics[width=1\linewidth]{Figures_Mik/label_distribution.png} 
-			\caption{True label distribution} 
+			\caption{\label{fig:confusionT} True label distribution} 
 			\vspace{4ex}
 		\end{minipage}%%
 		\begin{minipage}[b]{0.5\linewidth}
 			\centering
 			\includegraphics[width=1\linewidth]{Figures_Mik/kmeans2.png} 
-			\caption{Kmeans Clustering} 
+			\caption{\label{fig:confusionK}Kmeans Clustering} 
 			\vspace{4ex}
 		\end{minipage} 
 		\begin{minipage}[b]{0.5\linewidth}
 			\centering
 			\includegraphics[width=1\linewidth]{Figures_Mik/bestModel2.png} 
-			\caption{Spectral(exponential kernel)} 
+			\caption{\label{fig:confusionE}Spectral(exponential kernel)} 
 			\vspace{4ex}
 		\end{minipage}%% 
 		\begin{minipage}[b]{0.5\linewidth}
 			\centering
 			\includegraphics[width=1\linewidth]{Figures_Mik/cosSimConfMat2.png} 
-			\caption{Spectral(Cosine similarity)} 
+			\caption{\label{fig:confusionC}Spectral(Cosine similarity)} 
 			\vspace{4ex}
 		\end{minipage} 
 	\end{figure}
 	
 	
 	\section{Conclusions}
-	This paper presents a technique for Named Entity Recognition using spectral clustering and word embeddings. The main conclusion given the results is that our approach does not seem to perform very well creating clusters according to the named entities labels. This could be due to the fact that word embeddings representation encloses many different properties of the language, and named entity it is just one of them, consequently it is not possible to achieve a very good cut of the cluster according just to the named entities labels. We feel that with more tunning of parameters could achieve slightly better results. However, we do not think that this alone can be the solution of the problem. 
+	This paper presents a technique for Named Entity Recognition using spectral clustering and word embeddings. The main conclusion given the results is that our approach does not seem to perform very well creating clusters according to the named entities labels. This could be due to the fact that word embeddings representation encloses many different properties of the language, and named entity it is just one of them, consequently it is not possible to achieve a very good cut of the cluster according just to the named entities labels. Even though with more tuning of the parameters we could maybe achieve slightly better results, we do not think that this alone could be the solution of the problem. 
 	
 	
 	
