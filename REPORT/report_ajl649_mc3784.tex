@@ -22,8 +22,7 @@
 	%\slugger{siads}{xxxx}{xx}{x}{x---x}}%slugger should be set to juq, siads, sifin, or siims
 	
 	\begin{abstract}
-		This study explores the peformance of spectral clustering in a Spanish NER task. Our approach comprises two main steps. Firstly, we represent each Entity in two different ways: 1) by the embedding vector formed from the entity and 2) by the embedding vector formed from the context and the entity.  Then, we use spectral clustering over the words embeddings  to analyze weather the words cluster according to their labels or not.  In order to train the word embedding, we used Word2Vec algorithm over a huge Spanish Corpus with the skip-gram and CBOW models. Our results suggest that this approach performs better than the standard k-means cluster. However, it fails to correctly cluster entities 
-		
+		This study explores the peformance of spectral clustering in a Spanish Named Entity Recognition (NER) task. Our approach comprises two main steps. Firstly, we represent each Entity in two different ways: 1) by the embedding vector formed from the entity and 2) by the embedding vector formed from the context and the entity.  Then, we use spectral clustering over the words embeddings  to analyze weather the words cluster according to their labels or not.  In order to train the word embedding, we used Word2Vec algorithm over a huge Spanish Corpus with the skip-gram and CBOW models. Our results suggest that this approach performs better than the standard k-means cluster. However, the clustering accuracy is still very low and this suggests that spectral clustering applied on word embedding is not by itself enough to solve the NER task. 
 		
 	\end{abstract}
 	
@@ -134,8 +133,14 @@
 \end{figure}
 
 
-After Training the model with different combination of parameters, we found that the best model is the one that uses a CBOW embedding with dimension size $d_E=100$, average over $n_w=3$ entity context words, and the cosine similarity as the kernel for spectral clustering. The spectral clustering has also a comparable Rand index value for small values of $\gamma$. In the plot (\ref{fig:best}) we reported the results for this two model compared with the Rand index obtained applying k-means clustering to the embedding vectors. 
+After Training the model with different combination of parameters, we found that the best model is the one that uses a CBOW embedding with dimension size $d_E=100$, average over $n_w=3$ entity context words, and the cosine similarity as the kernel for spectral clustering. The spectral clustering has also a comparable Rand index value for small values of $\gamma$. In the plot we reported the results for this two model compared with the Rand index obtained applying k-means clustering to the embedding vectors. 
 
+	\begin{figure}\label{fig:best}
+	\centering
+	\includegraphics[width=0.8\textwidth]{Figures_Mik/results.png} 
+	\caption{The blue line show the rand index for the  exponential kernel model trained for different value of $\gamma$. The red line is the best model (cosine similarity) and the green line is the kmeans clustering, reported here as a bench mark } 
+\end{figure}
+The following table contains the correspondence between the numeric label used for the clusters and its name entity, if also contain the total number of samples for each clusters: 
 \begin{center}
 	\begin{tabular}{ |c|c|c|} 
 		\hline
@@ -151,17 +156,7 @@ After Training the model with different combination of parameters, we found that
 		\hline
 	\end{tabular}
 \end{center}
-
-
-	\begin{figure}[h]
-	\centering
-	\includegraphics[width=0.8\textwidth]{Figures_Mik/results.png} 
-	\label{fig:best}
-	\caption{The blue line show the rand index for the  exponential kernel model trained for different value of $\gamma$. The red line is the best model (cosine similarity) and the green line is the kmeans clustering, reported here as a bench mark } 
-\end{figure}
-
-
-
+The figures with the confusion matrices describe how the three model described here (Kmeans, Spectral with exponential kernel and Spectral with Cosine similarity) compere with an ideal perfect clustering. We notice that the worst cluster in every models is the number 3 that correspond with the named entity "Miscellaneous" that is an ambiguous label and therefore it is reasonable that it is not actually possible to obtain a cluster for it.
 	
 	
 	\begin{figure}
