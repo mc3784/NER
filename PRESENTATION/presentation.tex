@@ -129,27 +129,75 @@ New York University \\ % Your institution for the title page
 \subsection{Subsection Example} % A subsection can be created just before a set of slides with a common theme to further break down your presentation into chunks
 
 \begin{frame}
-\frametitle{Project description}
+	\frametitle{Motivation}
+	\begin{itemize} 
+		\item Named Entity Recognition (NER) is one of the important parts of NLP. Neural Network methods for NER tasks in English performs well due to the vast amount of labeled data. However, given the lack of resources and labeled data in Spanish these models cannot be trained properly. 
+		
+		
+	\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Goal and purpose}
 \begin{itemize} 
-\item Goal: 
-\item Purpose:  
+\item Goal: Analyze the performance of Spectral Clustering combined with word2Vector embeddings in a Spanish Named Entity Recognition task
+\item Purpose: Develop new approaches that are suitable for a Named Entity Recognition task in languages with lack of labeled data
 \end{itemize}
-%\begin{column}{.5\textwidth}
-%\begin{center}
-%\includegraphics[height=1.0in]{front_page.png}
-%\end{center}
-%\end{column}
-%\end{columns}
  \end{frame}
  
  
+ \begin{frame}
+ 	\frametitle{Named Entity Recognition}
+ 	\begin{itemize} 
+ 		\item It aims to find and classify expressions of special meaning in texts written in natural language.  These expressions can belong to different predefined classes such as Person, Organization and Location.  
+ 	\end{itemize}
+ 
+ \hspace{1cm} [PER Wolff ] , currently a journalist in [LOC Argentina],  \\
+  \hspace{1cm} played with [PER Del Bosque ] in the final years of the \\ 
+  \hspace{1cm} seventies in [ORG Real Madrid ] .
+ \end{frame}
+ 
 
 \begin{frame}
-\frametitle{Dataset}
+\frametitle{Problem Formulation}
+\begin{center}
+	\includegraphics[width=0.8\linewidth]{../REPORT/Figures/EntityEmb_pres.png} 
+\end{center}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Word2Vector (CBOW)}
+	\begin{center}
+		\includegraphics[width=0.4\linewidth]{../REPORT/Figures/CBOW.png} 
+	\end{center}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Word2Vector (Skip-gram)}
+	\begin{center}
+		\includegraphics[width=0.6\linewidth]{../REPORT/Figures/Skip.png} 
+	\end{center}
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Dense word embedding}
+	\begin{center}
+		\includegraphics[width=0.8\linewidth]{../REPORT/Figures/Embeddings.png} 
+	\end{center}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Dataset}
+	\begin{itemize} 
+    \item The \emph{CoNLL 2002} Shared Task Spanish data. This dataset contains 11,752 sentences, 369,171 words and 20,451 Named Entities
+    \end{itemize} 
+
 \begin{itemize} 
-\item bleble
-\item bleble
-\end{itemize}
+	\item The Spanish Billion Words Corpus  with a total of 1,420,665,810 raw words,  46,925,295 sentences and 3,817,833 unique tokens to train word embeddings
+\end{itemize} 
 \end{frame}
 
 \begin{frame}
@@ -257,9 +305,13 @@ Cluster Label & Name Entity & Number of sample\\
 \begin{frame}
 \frametitle{Conclusion}
 \begin{itemize} 
-\item bleble
-\item bleble
+\item Our approach does not seem to perform very well creating clusters according to the named entities labels
 \end{itemize}
+
+  \hspace{1cm} Possible Reason: The fact that word embeddings representation \\
+   \hspace{1cm} encloses many different properties of the language, and named \\
+    \hspace{1cm} entity it is just one of them, consequently it is not possible to \\
+      \hspace{1cm} achieve a very good cut of the cluster
 \end{frame}
 
 
