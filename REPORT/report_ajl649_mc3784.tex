@@ -58,7 +58,72 @@ It does so in one of two ways, either using context to predict a target word (a 
 
 To represent the context of a target word, we will use the vector formed by the continuous bag of words of the context \cite{vecSp}, that is the average of the word2vec \cite{word2vec} representation of all the words in the sentence containing a target word. In this way, the contribution of our project would be the implementation of the word embedding vector representation to compute spectral clustering. \\
 
+
+\section{Metric}
+To compere the different models we ran, we used the Adjusted Rand index \cite{rand},  that evaluate the accuracy of the predicted labels of the clustering given the ground truth of the label. 
+This index looks at each pair of sample, and evaluate the consistency of the prediction given the true label. Calling $C$ the ground truth clustering and $C'$ the predicted one, there are four possible set of pairs:
+$$
+\begin{array}{ll}
+S_{11} = \{\text{pairs belonging to the same cluster both in C and C'} \}\\
+S_{00} =  \{\text{pairs belonging to different cluster both in C and C'} \}\\
+S_{10} =  \{\text{pairs belonging to the same cluster both C but to different ones in C'} \}\\
+S_{01} =  \{\text{pairs belonging to the same cluster both C' but to different ones in C} \}\\
+\end{array}
+$$
+Calling with $n_{11}$ the number of sample in the first set (and analogously for the other sets), the Rand index is defined as:
+$$
+R=\frac{n_{11}+n_{00}}{n_{11}+n_{10}+n_{01}+n_{00}} = \frac{n_{11}+n_{00}}{{ n\choose 2}}
+$$
+where $n$ is the total number of sample. This index range from 0 (when C and C' don't agree on any pair of points) and 1 (when C and C' agree on every pairs). The Adjusted Rand index is defined by rescaling it considering the value that a random clustering would have, doing so the index value is 0 for random clusters. 
+
 \section{Experiments and Discussion}
+\begin{figure}  \label{best} 
+\includegraphics[width=1\linewidth]{results.png} 
+    \caption{The blue line show the rand index for the  exponential kernel model trained for different value of $\gamma$. The red line is the best model (cosine similarity) and the green line is the kmeans clustering, reported here as a bench mark } 
+\end{figure}
+Parameter of the model:
+\begin{itemize}  \label{confusion} 
+\item Size of the word  embedding space: $d_E$.
+\item technique used for the word embedding training: cbow  or skip-gram.
+\item Number of words embedding considered around the target word: $n_w$.
+\item Kernell used for the spectral clustering: cosine similarity 
+\begin{enumerate}
+\item Cosine similarity 
+\item Knearest neighbours 
+\item $k(x,y)=exp(-\gamma ||x-y||_1)$
+\end{enumerate} 
+\end{itemize}  
+Training the model with different combination of this parameter we have found that the best model is the one that uses an embedding $d_E=100$ trained with cbow, an average over $n_w=3$ words, and the cosine similarity as the kernel for spectral clustering. The spectral clustering has also a comparable Rand index value for small values of $\gamma$. In the plot (\ref{best}) we reported the results for this two model compared with the Rand index obtained applying kmeans clustering to the embedding vectors. 
+
+
+
+\begin{figure}
+  \label{confusion} 
+  \begin{minipage}[b]{0.5\linewidth}
+    \centering
+    \includegraphics[width=1\linewidth]{label_distribution.png} 
+    \caption{True label distribution} 
+    \vspace{4ex}
+  \end{minipage}%%
+  \begin{minipage}[b]{0.5\linewidth}
+    \centering
+    \includegraphics[width=1\linewidth]{kmeans2.png} 
+    \caption{Kmeans Clustering} 
+    \vspace{4ex}
+  \end{minipage} 
+  \begin{minipage}[b]{0.5\linewidth}
+    \centering
+    \includegraphics[width=1\linewidth]{bestModel2.png} 
+    \caption{Spectral(exponential kernel)} 
+    \vspace{4ex}
+  \end{minipage}%% 
+  \begin{minipage}[b]{0.5\linewidth}
+    \centering
+    \includegraphics[width=1\linewidth]{cosSimConfMat2.png} 
+    \caption{Spectral(Cosine similarity)} 
+    \vspace{4ex}
+  \end{minipage} 
+\end{figure}
 
 
 \section{Conclusions}
@@ -73,7 +138,7 @@ To represent the context of a target word, we will use the vector formed by the 
   \bibitem{popescu} Popescu, M., \& Hristea, F. (2011). State of the art versus classical clustering for unsupervised word sense disambiguation. Artificial Intelligence Review, 35(3), 241?264. http://dx.doi.org/10.1007/s10462-010-9193-7.  
   \bibitem{vecSp} http://crscardellino.me/SBWCE/
    \bibitem{word2vec} Mikolov, T., Chen, K., Corrado, G., \& Dean, J. (2013). Efficient Estimation of Word Representations in Vector Space. arXiv preprint arXiv:1301.3781. 
-   
+   \bibitem{rand}Rand, William M.: Objective Criteria for the Evaluation of Clustering Methods. Journal of the American Statistical Association, 66(336):846? 850, 1971.
 \end{thebibliography} 
 
 
