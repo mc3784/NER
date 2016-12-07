@@ -96,7 +96,7 @@
 	
 	
 	\section{Evaluation}
-	To compere the different models we ran, we used the Adjusted Rand index \cite{rand},  that evaluate the accuracy of the predicted labels of the clustering given the ground truth of the label. 
+	To compare the different models we ran, we used the Adjusted Rand index \cite{rand},  that evaluate the accuracy of the predicted labels of the clustering given the ground truth of the label. 
 	This index looks at each pair of sample, and evaluate the consistency of the prediction given the true label. Calling $C$ the ground truth clustering and $C'$ the predicted one, there are four possible set of pairs:
 	$$
 	\begin{array}{ll}
@@ -114,21 +114,27 @@
 	
 	\section{Experiments and Discussion}
 
+%\begin{itemize}  \label{confusion} 
+%	\item Size of the word  embedding space: $d_E$.
+%	\item Technique used for the word embedding training: cbow  or skip-gram.
+%	\item Number of words embedding considered around the target word: $n_w$.
+%	\item Kernell used for the spectral clustering:
+%	\begin{enumerate}
+%		\item Cosine similarity 
+%		\item Knearest neighbours 
+%		\item $k(x,y)=exp(-\gamma ||x-y||_1)$
+%	\end{enumerate} 
+%\end{itemize}  
 
-Parameter of the model:
-\begin{itemize}  \label{confusion} 
-	\item Size of the word  embedding space: $d_E$.
-	\item Technique used for the word embedding training: cbow  or skip-gram.
-	\item Number of words embedding considered around the target word: $n_w$.
-	\item Kernell used for the spectral clustering:
-	\begin{enumerate}
-		\item Cosine similarity 
-		\item Knearest neighbours 
-		\item $k(x,y)=exp(-\gamma ||x-y||_1)$
-	\end{enumerate} 
+\begin{figure}[h]
+	\caption{Parameters used to train the model}
+	\centering
+	\includegraphics[width=0.6\textwidth]{Figures_Mik/Parameters.png}
+	\label{fig:gull}
+\end{figure}
 
-\end{itemize}  
-After Training the model with different combination of parameters, we found that the best model is the one that uses a CBOW embedding with dimension $d_E=100$, average over $n_w=3$ context words, and the cosine similarity as the kernel for spectral clustering. The spectral clustering has also a comparable Rand index value for small values of $\gamma$. In the plot (\ref{fig:best}) we reported the results for this two model compared with the Rand index obtained applying k-means clustering to the embedding vectors. 
+
+After Training the model with different combination of parameters, we found that the best model is the one that uses a CBOW embedding with dimension size $d_E=100$, average over $n_w=3$ entity context words, and the cosine similarity as the kernel for spectral clustering. The spectral clustering has also a comparable Rand index value for small values of $\gamma$. In the plot (\ref{fig:best}) we reported the results for this two model compared with the Rand index obtained applying k-means clustering to the embedding vectors. 
 
 \begin{center}
 	\begin{tabular}{ |c|c|c|} 
